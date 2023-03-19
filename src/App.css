@@ -1,0 +1,75 @@
+.App {
+  text-align: center;
+}
+
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+
+
+label {
+    padding-inline-end: 10px;
+    
+    
+}
+
+.css-1rwt2y5-MuiButtonBase-root-MuiButton-root{
+  margin: 20px !important;
+  
+}
+
+.container {
+  display: grid
+}
+
+
+.homePaperContainer{
+  display: grid;
+  justify-content: center;
+  align-items: center;
+  justify-self: center;
+  
+}
+
+.titleText{
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px;
+}
+
+.subTitleText{
+  text-align: center;
+}
+
+.creatorTag{
+  text-align: center;
+  font-size: 10px;
+  margin: 10px;
+}
+
+.homePaper {
+  margin-top: 5%;
+  
+
+}
+
