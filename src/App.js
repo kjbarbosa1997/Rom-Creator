@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Header from './components/Header'
@@ -6,8 +6,6 @@ import CustomerForm from './pages/CustomerForm'
 import AdminForm from './pages/AdminForm'
 import ROMTable from './pages/ROMTable'
 import Home from './pages/Home'
-import Button from '@mui/material/Button'
-import { Paper } from '@mui/material'
 
 
 function App() {

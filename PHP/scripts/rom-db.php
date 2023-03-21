@@ -1,7 +1,18 @@
 <?php
 require('fpdf185/fpdf.php');
 //db connection
-$conn = new mysqli("localhost","root","","romdb") or die("Unable to connect");
+
+$host = "localhost";
+	$dbname = "romdb";
+	$username = "root";
+	$password = "12354";
+	
+	$conn = mysqli_connect(hostname: $host, username: $username, password: $password, database: $dbname) or die("Could not connect to database");
+
+	if (mysqli_connect_errno()){
+		die("Connection error: " . mysqli_connect_error());
+	}
+
 $query = mysqli_query($conn, "select * from rom
     inner join tickets using(ticketID)
     where 

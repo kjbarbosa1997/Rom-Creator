@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import { Button } from '@mui/material';
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -26,11 +27,15 @@ const rows = [
   { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
   { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
   { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: 69 },
-  { id: 6, lastName: 'Melisandre', firstName: 'YOUR MAMA', age: 150 },
+  { id: 6, lastName: 'Melisandre', firstName: 'Null', age: 150 },
   { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
   { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
   { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
 ];
+
+
+
+
 
 export default function DataTable() {
   return (
@@ -42,6 +47,8 @@ export default function DataTable() {
         rowsPerPageOptions={[5]}
         checkboxSelection
       />
+
+      <Button variant="contained">Generate ROM</Button>
     </div>
   );
 }

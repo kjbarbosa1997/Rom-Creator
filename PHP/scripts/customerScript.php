@@ -27,7 +27,7 @@ if (! mysqli_stmt_prepare($stmt, $sql)){
 	die(mysqli_error(($conn))); 
 }
 
-mysqli_stmt_bind_param($stmt, "sssss", $email, $email, $name, $tpm, $financialAnalyst);
+mysqli_stmt_bind_param($stmt, "sssss", $name, $email, $name, $tpm, $financialAnalyst);
 
 mysqli_stmt_execute($stmt);
 echo "Customer record(s) saved.";

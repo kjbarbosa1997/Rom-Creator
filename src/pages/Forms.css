@@ -75,6 +75,8 @@ li {
 
 .boxLeft {
     display: flex !important; 
+    position: relative !important;
+    top: 5%;
     flex-wrap: wrap;
     align-content: space-between;
     justify-content: center;

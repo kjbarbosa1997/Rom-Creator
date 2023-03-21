@@ -5,15 +5,13 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import AccountCircle from '@mui/icons-material/AccountCircle';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { Link } from "react-router-dom";
 
 
 export default function Header() {
-    const pages = ["Customer", "Admin"];
-    const pageLinks = ["/customer", "/admin"];
+    const pages = ["Home", "Customer", "Admin", "ROM Table"];
+    const pageLinks = ["/home", "/customer", "/admin", "/romtable"];
 
     const [anchorEl, setAnchorEl] = React.useState(null);
 
