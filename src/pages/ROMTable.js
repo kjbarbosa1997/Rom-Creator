@@ -1,6 +1,10 @@
 import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import { Button } from '@mui/material';
+import axios from 'axios';
+import { useForm, useFieldArray, Controller } from 'react-hook-form';
+import { useState } from "react";
+import $ from "jquery";
 
 const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
@@ -37,8 +41,49 @@ const rows = [
 
 
 
+
 export default function DataTable() {
+
+  
+
+
+  const { register, control, handleSubmit, reset, trigger, setError } = useForm({
+
+  });
+  const { fields, append, remove } = useFieldArray({
+      control,
+      name: "tasks"
+  })
+
+  const [name, setName] = useState("");
+  const [result, setResult] = useState("");
+
+  const handleChange = (e) => {
+      setName(e.target.value);
+  };
+
+  const handleSumbit = (e) => {
+    e.preventDefault();
+    const form = $(e.target);
+    $.ajax({
+        type: "POST",
+        url: form.attr("action"),
+        data: form.serialize(),
+        success(data) {
+            setResult(data);
+        },
+    });
+  };
+
+
   return (
+
+<form action="http://localhost:8000/scripts/populateTable.php"
+        method="post"
+        >
+
+          
+    
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
         rows={rows}
@@ -48,7 +93,8 @@ export default function DataTable() {
         checkboxSelection
       />
 
-      <Button variant="contained">Generate ROM</Button>
+      <Button type="submit" variant="contained" onChange={(event) => handleChange(event)}>Generate ROM</Button>
     </div>
+    </form>
   );
 }
