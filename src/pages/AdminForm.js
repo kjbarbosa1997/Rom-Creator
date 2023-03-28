@@ -44,7 +44,7 @@ function App() {
     const { register, control, handleSubmit } = useForm({
 
         defaultValues: {
-            services: [{ taskName: "", serviceName: "", units: "", 
+            services: [{ taskName: "", serviceID: "1", units: "", 
                             isPaymentRecurring: "", yearlyCost: "", 
                             weeklyCost: "", startDate: "", 
                             endDate: "", taskDescription: "" }]
@@ -62,15 +62,15 @@ function App() {
             const url = "http://localhost:8000/scripts/adminScript.php";
             let fData = new FormData();
             fData.append('adminaccess', true);
-            fData.append('task', data.services[i].taskName);
-            fData.append('service', data.services[i].serviceName);
+            fData.append('taskName', data.services[i].taskName);
+            fData.append('serviceID', data.services[i].serviceName);
             fData.append('units', data.services[i].units);
-            fData.append('payment', data.services[i].isPaymentRecurring);
-            fData.append('yearlycost', data.services[i].yearlyCost);
-            fData.append('weeklycost', data.services[i].weeklyCost);
-            fData.append('dosstart', data.services[i].startDate);
-            fData.append('dosend', data.services[i].endDate);
-            fData.append('description', data.services[i].taskDescription);
+            // fData.append('payment', data.services[i].isPaymentRecurring);
+            // fData.append('yearlycost', data.services[i].yearlyCost);
+            // fData.append('weeklycost', data.services[i].weeklyCost);
+            fData.append('startDate', data.services[i].startDate);
+            fData.append('endDate', data.services[i].endDate);
+            fData.append('taskDescription', data.services[i].taskDescription);
             axios.post(url, fData)
             .then(response=> alert(response.data))
             .catch(error=> alert(error));
@@ -99,39 +99,24 @@ function App() {
                                                 select // tell TextField to render select
                                                 label="Services"
                                                 sx={{ m: 2, minWidth: 258 }}
-                                                inputProps={register(`services.${index}.serviceName`, {
+                                                inputProps={register(`services.${index}.serviceID`, {
                                                     required: 'Please Select a Service',
                                                   })}>
-                                                <MenuItem value="Service 1">Service 1</MenuItem>
-                                                <MenuItem value="Service 2">Service 2</MenuItem>
-                                                <MenuItem value="Service 3">Service 3</MenuItem>
-                                                <MenuItem value="Service 4">Service 4</MenuItem>
-                                                <MenuItem value="Service 5">Service 5</MenuItem>
-                                                <MenuItem value="Service 6">Service 6</MenuItem>
+                                                <MenuItem value="1">Setup (Minor)</MenuItem>
+                                                <MenuItem value="2">Setup (Major)</MenuItem>
+                                                <MenuItem value="3">Setup (Moderate)</MenuItem>
+                                                <MenuItem value="4">Collaborative Work Space (CWS)</MenuItem>
+                                                
                                             </TextField>
                                             <OutlinedInput className="units" placeholder="Units" {...register(`services.${index}.units`)} />
 
-                                            <FormControl className='radioButtons'>
-                                                <FormLabel id="demo-radio-buttons-group-label">Recurrent Payment</FormLabel>
-                                                <RadioGroup
-
-                                                    row
-                                                    aria-labelledby="demo-radio-buttons-group-label"
-                                                    name="radio-buttons-group"
-                                                    defaultValue="no"
-                                                    sx={{ p: 1 }}
-                                                >
-                                                    <FormControlLabel value="true" control={<Radio {...register(`services.${index}.isPaymentRecurring`)} />} label="Yes" />
-                                                    <FormControlLabel value="false" control={<Radio {...register(`services.${index}.isPaymentRecurring`)} />} label="No" />
-                                                </RadioGroup>
-                                            </FormControl>
+                                    
                                         </Container>
                                     </Grid>
 
                                     <Grid item xs={3}>
                                         <Container className='boxMiddle'>
-                                            <OutlinedInput sx={{ m: 5, bottom: 5 }} placeholder="Yearly Cost" {...register(`services.${index}.yearlyCost`)} />
-                                            <OutlinedInput sx={{ m: 5, bottom: 50 }} placeholder="Weekly Cost" {...register(`services.${index}.weeklyCost`)} />
+                                        
 
                                             {/* Implement register component above on input data that does not print to console*/}
 
@@ -160,7 +145,6 @@ function App() {
                                                 <DesktopDatePicker
                                                     label="Date of Service End"
                                                     value={endDate}
-                                                    className='endDate'
                                                     inputFormat="MM/DD/YYYY"
                                                     endDate={endDate}
                                                     onChange={(newValue) => {
@@ -185,7 +169,7 @@ function App() {
                                                 label="Task Description"
                                                 multiline
                                                 sx={{ m: 2, right: 15, top: 20 }}
-                                                rows={13}
+                                                rows={10}
                                             />
                                         </Container>
                                     </Grid>

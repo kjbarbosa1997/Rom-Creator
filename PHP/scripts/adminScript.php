@@ -4,10 +4,10 @@
 
     $isAdmin = filter_input(INPUT_POST, 'adminaccess', FILTER_VALIDATE_BOOL);
 
-    $host = "localhost";
+    $host = "localhost:3306";
     $dbname = "romdb";
     $username = "root";
-    $password = "12354";
+    $password = "";
 
     //$conn = mysqli_connect($host, $username, $password, $dbname);
 
@@ -16,20 +16,17 @@
     if (mysqli_connect_errno()) { die("Connection error: " . mysqli_connect_error()); }   
 
     if($isAdmin){
-        $servicevalue = $_POST['service'];
         $unitsvalue = filter_input(INPUT_POST, 'units', FILTER_VALIDATE_INT);
-        $paymentvalue = filter_input(INPUT_POST, 'payment', FILTER_VALIDATE_BOOL);
-        $yearlyvalue = filter_input(INPUT_POST, 'yearlycost', FILTER_VALIDATE_INT);
-        $weeklyvalue = filter_input(INPUT_POST, 'weeklycost', FILTER_VALIDATE_INT);
-        $startvalue = $_POST['dosstart'];
-        $endvalue = $_POST['dosend'];
-        $descvalue = $_POST['description'];
+        // $paymentvalue = filter_input(INPUT_POST, 'payment', FILTER_VALIDATE_BOOL);
+        // $yearlyvalue = filter_input(INPUT_POST, 'yearlycost', FILTER_VALIDATE_INT);
+        // $weeklyvalue = filter_input(INPUT_POST, 'weeklycost', FILTER_VALIDATE_INT);
+        $startvalue = $_POST['startDate'];
+        $endvalue = $_POST['endDate'];
+        $descvalue = $_POST['taskDescription'];
         $romid = 1; //Will soon be a generated value or something else.
-        $serviceid = 4; //Will soon be a generated value or something else.
-        $taskvalue = $_POST["task"];
-        echo "UNITS AMOUNT: ";
-        echo $unitsvalue;
-
+        $serviceid = $_POST['serviceID']; //Will soon be a generated value or something else.
+        $taskvalue = $_POST["taskName"];
+        
         $sql = "INSERT INTO task (romID, serviceID, taskName, startDate, endDate, taskDescription, units) VALUES (?,?,?,?,?,?,?)";
 
         //$sql = "INSERT INTO 'task' ($romid, $serviceid, $servicevalue, $startvalue, $endvalue, $descvalue, $unitsvalue) VALUES (?,?,?,?,?,?,?)";

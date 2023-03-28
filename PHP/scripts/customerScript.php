@@ -7,10 +7,10 @@
 	$financialAnalyst = $_POST['financialAnalyst'];
 	
 
-	$host = "localhost";
+	$host = "localhost:3306";
 	$dbname = "romdb";
 	$username = "root";
-	$password = "12354";
+	$password = "";
 	
 	$conn = mysqli_connect(hostname: $host, username: $username, password: $password, database: $dbname) or die("Could not connect to database");
 
