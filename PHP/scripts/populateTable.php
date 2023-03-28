@@ -18,5 +18,7 @@ $response = array();
 while($row = mysqli_fetch_assoc($userData)){ 
   $response[] = $row; 
 } 
-echo json_encode($response); exit;
+exit;
+
+
 

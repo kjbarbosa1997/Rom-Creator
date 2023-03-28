@@ -31,9 +31,9 @@ const firebaseConfig = {
 
 function App() {
 
-    const [startDate, setStartDate] = useState(new Date());
+    const [startDate, setStartDate] = useState([new Date()]);
 
-    const [endDate, setEndDate] = useState(new Date());
+    const [endDate, setEndDate] = useState([new Date()]);
 
     const [service, setService] = useState('');
     
@@ -139,6 +139,7 @@ function App() {
                                                 <DesktopDatePicker
 
                                                     label="Date of Service Start"
+                                                    name="startDate"
                                                     value={startDate}
                                                     className='startDate'
                                                     inputFormat="MM/DD/YYYY"
@@ -159,6 +160,7 @@ function App() {
                                             <LocalizationProvider dateAdapter={AdapterMoment}>
                                                 <DesktopDatePicker
                                                     label="Date of Service End"
+                                                    name="endDate"
                                                     value={endDate}
                                                     className='endDate'
                                                     inputFormat="MM/DD/YYYY"
