@@ -44,7 +44,7 @@ function App() {
     const { register, control, handleSubmit } = useForm({
 
         defaultValues: {
-            services: [{ taskName: "", serviceID: "1", units: "", 
+            services: [{ taskName: "", serviceID: 0, units: "", 
                             isPaymentRecurring: "", yearlyCost: "", 
                             weeklyCost: "", startDate: "", 
                             endDate: "", taskDescription: "" }]
@@ -63,7 +63,7 @@ function App() {
             let fData = new FormData();
             fData.append('adminaccess', true);
             fData.append('taskName', data.services[i].taskName);
-            fData.append('serviceID', data.services[i].serviceName);
+            fData.append('serviceID', data.services[i].serviceID);
             fData.append('units', data.services[i].units);
             // fData.append('payment', data.services[i].isPaymentRecurring);
             // fData.append('yearlycost', data.services[i].yearlyCost);
@@ -102,10 +102,10 @@ function App() {
                                                 inputProps={register(`services.${index}.serviceID`, {
                                                     required: 'Please Select a Service',
                                                   })}>
-                                                <MenuItem value="1">Setup (Minor)</MenuItem>
-                                                <MenuItem value="2">Setup (Major)</MenuItem>
-                                                <MenuItem value="3">Setup (Moderate)</MenuItem>
-                                                <MenuItem value="4">Collaborative Work Space (CWS)</MenuItem>
+                                                <MenuItem value={1}>Setup (Minor)</MenuItem>
+                                                <MenuItem value={2}>Setup (Major)</MenuItem>
+                                                <MenuItem value={3}>Setup (Moderate)</MenuItem>
+                                                <MenuItem value={4}>Collaborative Work Space (CWS)</MenuItem>
                                                 
                                             </TextField>
                                             <OutlinedInput className="units" placeholder="Units" {...register(`services.${index}.units`)} />

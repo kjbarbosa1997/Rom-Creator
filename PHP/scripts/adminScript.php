@@ -26,11 +26,13 @@
         $romid = 1; //Will soon be a generated value or something else.
         $serviceid = $_POST['serviceID']; //Will soon be a generated value or something else.
         $taskvalue = $_POST["taskName"];
+
+        $turnOffFKC = mysqli_execute_query($conn, "SET foreign_key_checks = 0");
         
         $sql = "INSERT INTO task (romID, serviceID, taskName, startDate, endDate, taskDescription, units) VALUES (?,?,?,?,?,?,?)";
 
         //$sql = "INSERT INTO 'task' ($romid, $serviceid, $servicevalue, $startvalue, $endvalue, $descvalue, $unitsvalue) VALUES (?,?,?,?,?,?,?)";
-        
+
         $stmt = mysqli_stmt_init($conn);
         if ( ! mysqli_stmt_prepare($stmt, $sql)) { die(mysqli_error($conn)); }
         mysqli_stmt_bind_param($stmt,'iissssi',
@@ -40,6 +42,9 @@
         );
         mysqli_stmt_execute($stmt);
         echo "Admin record(s) saved.";
+
+        $turnOnFKC = mysqli_execute_query($conn, "SET foreign_key_checks = 1");
+
         
         
     }
