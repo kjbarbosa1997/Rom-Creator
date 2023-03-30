@@ -10,6 +10,8 @@ import axios from 'axios';
 import { data } from 'jquery';
 import { initializeApp } from 'firebase/app';
 import { getAnalytics, setDefaultEventParameters } from "firebase/analytics";
+import { Link } from 'react-router-dom'
+
 
 const theme = createTheme({
 
@@ -24,10 +26,10 @@ const firebaseConfig = {
     messagingSenderId: "431350852544",
     appId: "1:431350852544:web:f1cfdd7748702a7410b625",
     measurementId: "G-EFSEHNFG79"
-  };
+};
 
-  const app = initializeApp(firebaseConfig);
-  const analytics = getAnalytics(app);
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 function App() {
 
@@ -35,19 +37,21 @@ function App() {
 
     const [endDate, setEndDate] = useState(new Date());
 
-    const [service, setService] = useState('');
-    
+    const [serviceID, setServiceID] = useState('');
+
     const handleChange = (event) => {
-        setService(event.target.value);
+        setServiceID(event.target.value);
     };
 
-    const { register, control, handleSubmit } = useForm({
+    const { register, control, handleSubmit, setValue } = useForm({
 
         defaultValues: {
-            services: [{ taskName: "", serviceID: 0, units: "", 
-                            isPaymentRecurring: "", yearlyCost: "", 
-                            weeklyCost: "", startDate: "", 
-                            endDate: "", taskDescription: "" }]
+            services: [{
+                taskName: "", serviceID: 0, units: "",
+                isPaymentRecurring: "", yearlyCost: "",
+                weeklyCost: "", startDate: "",
+                endDate: "", taskDescription: ""
+            }]
         }
     });
     const { fields, append, remove } = useFieldArray({
@@ -58,7 +62,7 @@ function App() {
     const SendToPHP = (data) => {
         var i = 0;
         console.log(data);
-        for(i = 0; i<data.services.length; i++){
+        for (i = 0; i < data.services.length; i++) {
             const url = "http://localhost:8000/scripts/adminScript.php";
             let fData = new FormData();
             fData.append('adminaccess', true);
@@ -72,8 +76,8 @@ function App() {
             fData.append('endDate', data.services[i].endDate);
             fData.append('taskDescription', data.services[i].taskDescription);
             axios.post(url, fData)
-            .then(response=> alert(response.data))
-            .catch(error=> alert(error));
+                .then(response => alert(response.data))
+                .catch(error => alert(error));
         }
     }
 
@@ -83,7 +87,7 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <form onSubmit={handleSubmit(SendToPHP)}>
+            <form onSubmit={handleSubmit(SendToPHP)} action="http://localhost:8000/scripts/rom-from-db.php">
                 <ul>
                     {fields.map((item, index) => (
                         <li key={item.id}>
@@ -91,32 +95,32 @@ function App() {
                                 <Grid container spacing={0}> {/*Split the right half into two halves, left and right*/}
                                     <Grid item xs={3} >
                                         <Container className='boxLeft'>
-                                        <OutlinedInput className="taskName" placeholder="Task Name" {...register(`services.${index}.taskName`)} />
+                                            <OutlinedInput className="taskName" placeholder="Task Name" {...register(`services.${index}.taskName`)} />
                                             <TextField
-                                                className='services'
-                                                value={service}
+                                                className='serviceID'
+                                                value={serviceID}
                                                 onChange={handleChange}
                                                 select // tell TextField to render select
                                                 label="Services"
                                                 sx={{ m: 2, minWidth: 258 }}
                                                 inputProps={register(`services.${index}.serviceID`, {
                                                     required: 'Please Select a Service',
-                                                  })}>
+                                                })}>
                                                 <MenuItem value={1}>Setup (Minor)</MenuItem>
                                                 <MenuItem value={2}>Setup (Major)</MenuItem>
                                                 <MenuItem value={3}>Setup (Moderate)</MenuItem>
                                                 <MenuItem value={4}>Collaborative Work Space (CWS)</MenuItem>
-                                                
+
                                             </TextField>
                                             <OutlinedInput className="units" placeholder="Units" {...register(`services.${index}.units`)} />
 
-                                    
+
                                         </Container>
                                     </Grid>
 
                                     <Grid item xs={3}>
                                         <Container className='boxMiddle'>
-                                        
+
 
                                             {/* Implement register component above on input data that does not print to console*/}
 
@@ -133,11 +137,11 @@ function App() {
                                                     }}
                                                     inputProps={register(`services.${index}.startDate`, {
                                                         required: 'Please Select a Start Date',
-                                                      })}
-                                                    renderInput={(params) => 
-                                                        <TextField 
-                                                            {...params} 
-                                                            
+                                                    })}
+                                                    renderInput={(params) =>
+                                                        <TextField
+                                                            {...params}
+
                                                         />}
                                                 />
                                             </LocalizationProvider>
@@ -152,7 +156,7 @@ function App() {
                                                     }}
                                                     inputProps={register(`services.${index}.endDate`, {
                                                         required: 'Please Select an End Date',
-                                                      })}
+                                                    })}
                                                     renderInput={(params) => <TextField {...params} />}
                                                 />
                                             </LocalizationProvider>
@@ -177,15 +181,24 @@ function App() {
                                     <Button type="button" variant="outlined" className="removeButtonAdmin" onClick={() => remove(index)}>Remove</Button>
                                 </Grid>
                             </Paper>
-                            
+
                         </li>
-                        
+
                     ))}
                 </ul>
                 <Fab color="primary" aria-label="add" type="button" onClick={() => append()} variant="outlined" className="addButtonAdmin" sx={{ position: 'absolute', bottom: 20, right: 20 }}>
-                <AddIcon />
+                    <AddIcon />
                 </Fab>
-                <Box display="flex" justifyContent="center" sx={{ m: 2 }}> <Button variant="contained" type="submit" sx={{ position: 'sticky' }}> Submit </Button> </Box>
+                <Box display="flex" justifyContent="center" sx={{ m: 2 }}>
+                    <Button
+                        variant="contained"
+                        type="submit"
+                        sx={{ position: 'sticky' }}
+                        // component={Link} to="http://localhost:8000/scripts/rom-from-db.php"
+                    >
+                        Submit
+                    </Button>
+                </Box>
             </form>
         </ThemeProvider>
     );
