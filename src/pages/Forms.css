@@ -1,115 +1,122 @@
-
 li {
     display: flex;
     flex-wrap: wrap;
-   
+    flex-direction: column;
+    align-items: flex-end;
 }
-
 .css-1ps6pg7-MuiPaper-root{
     height: 100vh;
-    
 }
-
 .css-sghohy-MuiButtonBase-root-MuiButton-root{
     margin-top: 20px !important;
 }
-
 .removeButton{
     position: relative !important;
-
 }
-
 .leftText{
     left: -10px;
 }
-
 .addTaskButton{
     left: 38% !important;
 }
-
 .fileUpload{
     left: 20%;
 }
-
 .addButtonAdmin{
     position: fixed !important;
     top: 90% !important;
     right: 1% !important;
 }
-
 .firstService{
     bottom: 12px;
 }
-
 .subsequentService{
     left: 47px;
 }
-
-
-
 .submitButton{
     position: relative !important;
     bottom: 20px;
     left: 47%;
 }
-
 .firstService{
     position: relative !important;
     top: 65px;
     right: 107px;
 }
-
 .firstUnits{
     position: relative !important;
     top: 9px;
     left: 115px;
 }
-
 .adminPaper {
     min-height: 10% !important;
     min-width: 20% !important;
     position: relative !important;
     right: 39px !important;
-    
 }
-
 .boxLeft {
-    display: flex !important; 
+    display: flex !important;
     position: relative !important;
-    top: 5%;
+    top: 15%;
     flex-wrap: wrap;
     align-content: space-between;
     justify-content: center;
     min-width: 50%;
 }
-
 .boxMiddle{
-    display: flex !important; 
+    display: flex !important;
+    position: relative !important;
+    top: 39%;
     flex-wrap: wrap;
-    align-content: center;
+    align-content: space-between;
     justify-content: center;
-    
+    min-width: 50%;
 }
-
 .boxRight{
     display: flex;
+    position: relative !important;
+    right: 3%;
     flex-wrap: wrap;
     align-items: center;
     justify-content: center;
     align-content: center;
 }
-
 .startDate{
     bottom: 40px;
 }
-
 .services {
-    top: 20px;
-    
+    display: flex;
+    position: relative !important;
+    left: 25%;
 }
-
 .adminPaperOne{
-    min-height: 450px !important; 
+    min-height: 450px !important;
     min-width: 100px !important;
     position:  relative !important;
+}
+.projectChoice {
+    display: flex;
+    position: relative !important;
+    align-self: center;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    align-content: center;
+}
+.inputLabel {
+    position: relative !important;
+    display: flex !important;
+    top: 10px;
+    right: 2%;
+}
+.header {
+    display: flex !important;
+    position: relative !important;
+    font-family: 'Roboto', sans-serif;
+    justify-content: center;
+    top: 50px;
+    font-size: 20px;
+}
+.uploadBox {
+    bottom: 20px;
 }

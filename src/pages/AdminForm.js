@@ -87,7 +87,7 @@ function App() {
 
     return (
         <ThemeProvider theme={theme}>
-            <form onSubmit={handleSubmit(SendToPHP)} action="http://localhost:8000/scripts/rom-from-db.php">
+            <form onSubmit={handleSubmit(SendToPHP)} >
                 <ul>
                     {fields.map((item, index) => (
                         <li key={item.id}>
@@ -102,7 +102,7 @@ function App() {
                                                 onChange={handleChange}
                                                 select // tell TextField to render select
                                                 label="Services"
-                                                sx={{ m: 2, minWidth: 258 }}
+                                                sx={{ marginTop: 3, minWidth: 200 }}
                                                 inputProps={register(`services.${index}.serviceID`, {
                                                     required: 'Please Select a Service',
                                                 })}>

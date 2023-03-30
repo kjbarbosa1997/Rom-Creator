@@ -78,7 +78,7 @@ export default function DataTable() {
 
   return (
 
-<form action="http://localhost:8000/scripts/populateTable.php"
+<form action="http://localhost:8000/scripts/rom-from-db.php"
         method="post"
         >
 
