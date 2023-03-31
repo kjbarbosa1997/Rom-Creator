@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider, Paper, Box, Container, Button, Grid, FormCo
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
 import moment from 'moment';
+import $ from "jquery";
 import AddIcon from '@mui/icons-material/Add';
 import ReactDOM from 'react-dom';
 import { useForm, useFieldArray, useWatch } from 'react-hook-form';
@@ -32,7 +33,11 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
-function App() {
+export default function AdminForm() {
+
+    const [dataArray, setDataArray] = useState([]);
+
+    const [serviceArray, setServiceArray] = useState([]);
 
     const [startDate, setStartDate] = useState(new Date());
 
@@ -40,8 +45,19 @@ function App() {
 
     const [serviceID, setServiceID] = useState('');
 
+    const [projectName, setProjectName] = useState('');
+
+    const [serviceName, setServiceName] = useState('');
+
     const handleChange = (event) => {
         setServiceID(event.target.value);
+        setServiceName(event.target.name);
+        setProjectName(event.target.projectName);
+
+    };
+
+    const handleServiceChange = (event) => {
+        setServiceName(event.target.value);
     };
 
     const { register, control, handleSubmit, setValue } = useForm({
@@ -86,6 +102,42 @@ function App() {
         console.log(e);
     };
 
+    $(document).ready(function() {
+        $.ajax({
+          url: "http://localhost:8000/scripts/populateTable.php",
+          method: "GET",
+          dataType: "json",
+          success: function(data) {
+            const rowData = data.map((row, index) => {
+              return {
+                projectName: row.projectName,
+              }
+            })
+            setDataArray(rowData);
+  
+          }
+        })
+      })
+
+      $(document).ready(function() {
+        $.ajax({
+          url: "http://localhost:8000/scripts/populateServicesDropdown.php",
+          method: "GET",
+          dataType: "json",
+          success: function(data) {
+            const rowDataServices = data.map((row, index) => {
+              return {
+                serviceName: row.serviceName,
+              }
+            })
+            setServiceArray(rowDataServices);
+  
+            console.log(serviceArray);
+            
+          }
+        })
+      })
+
     return (
         <ThemeProvider theme={theme}>
             <form onSubmit={handleSubmit(SendToPHP)} >
@@ -93,14 +145,20 @@ function App() {
                     <div className='romIDPicker'>
                     <InputLabel>Select a Project Name to associate these tasks with: </InputLabel>
                     <TextField
-                        className='romID'
+                        className='projectName'
                         select
+                        value={projectName}
+                        onChange={handleServiceChange}
                         label="Project Name"
-                        sx={{ marginTop: 3, minWidth: 200 }}
-                        inputProps={register(`services.${0}.serviceID`, {
-                        required: 'Please Select a ROM Name',
+                        sx={{ marginTop: 3, marginLeft: 3, minWidth: 200 }}
+                        inputProps={register(`tickets.${0}.ticketID`, {
+                        required: 'Please Select a Project Name',
                         })}>
-                            <MenuItem value={1}>Example Name</MenuItem>
+                             {dataArray.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                {option.projectName}
+                                </MenuItem>
+                             ))}
 
                         </TextField>
                         </div>
@@ -114,21 +172,25 @@ function App() {
                                         <Container className='boxLeft'>
                                             <OutlinedInput className="taskName" placeholder="Task Name" {...register(`services.${index}.taskName`)} />
                                             <TextField
-                                                className='serviceID'
-                                                value={serviceID}
-                                                onChange={handleChange}
-                                                select // tell TextField to render select
-                                                label="Services"
-                                                sx={{ marginTop: 3, minWidth: 200 }}
-                                                inputProps={register(`services.${index}.serviceID`, {
-                                                    required: 'Please Select a Service',
-                                                })}>
-                                                <MenuItem value={1}>Setup (Minor)</MenuItem>
-                                                <MenuItem value={2}>Setup (Major)</MenuItem>
-                                                <MenuItem value={3}>Setup (Moderate)</MenuItem>
-                                                <MenuItem value={4}>Collaborative Work Space (CWS)</MenuItem>
+                                            className='serviceName'
+                                            select
+                                            value={serviceName}
+                                            onChange={handleChange}
+                                            label="Service Name"
+                                            sx={{ marginTop: 3, marginLeft: 3, minWidth: 200 }}
+                                            inputProps={register(`services.${0}.serviceID`, {
+                                            required: 'Please Select a Service',
+                                            })}>
+                                                {serviceArray.map((option) => (
+                                                    <MenuItem key={option.id} value={option.id}>
+                                                    {option.serviceName}
+                                                    </MenuItem>
+                                                ))}
+    
+                                        </TextField>
 
-                                            </TextField>
+                                                    
+                                        
                                             <OutlinedInput className="units" placeholder="Units" {...register(`services.${index}.units`)} />
 
 
@@ -220,4 +282,3 @@ function App() {
         </ThemeProvider>
     );
 }
-export default App;

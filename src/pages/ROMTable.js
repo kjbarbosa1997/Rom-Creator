@@ -77,8 +77,6 @@ export default function DataTable() {
           })
           setDataArray(rowData);
 
-          
-          console.log(dataArray);
         }
       })
     })
@@ -109,11 +107,11 @@ export default function DataTable() {
       <div className = "generateButton">
       <InputLabel className='romIDInputLabel'>Choose Project Name to generate ROM for: </InputLabel>
       <TextField
-                        className='romID'
+                        className='projectName'
                         select
-                        label="ROM Name"
+                        label="Project Name"
                         sx={{ marginTop: 3, marginLeft: 3, minWidth: 200 }}
-                        inputProps={register(`services.${0}.serviceID`, {
+                        inputProps={register(`tickets.${0}.ticketID`, {
                         required: 'Please Select a Project Name',
                         })}>
                             {dataArray.map((option) => (
