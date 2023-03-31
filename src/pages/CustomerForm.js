@@ -12,6 +12,8 @@ import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid'
 import Paper from '@mui/material/Paper';
 import { OutlinedInput } from "@mui/material";
+import { InputLabel } from "@mui/material";
+import { Typography } from "@mui/material";
 
 
 
@@ -51,8 +53,9 @@ export default function CustomerForm() {
         method="post"
         >
             <Paper elevation={10} sx={{ m: 4}}>
+            <Typography variant="h5" component="h1" className="header">Submit a ticket</Typography>
             <Grid sx={{ flexGrow: 1 }} container spacing={2}>
-            
+                
                 <Grid item xs={6} style={{ marginBottom: 10 }}>
                     
                                 <Box
@@ -114,6 +117,7 @@ export default function CustomerForm() {
                                 <div className="uploadBox">
 
                                     <li>
+                                        <InputLabel variant="h6" component="h1">Upload documentation here: </InputLabel> 
                                         <OutlinedInput className="fileUpload" type="file" id="fileUpload" name="fileUpload" />
                                     </li>
                                 </div>
