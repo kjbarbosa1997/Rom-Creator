@@ -69,17 +69,16 @@ export default function CustomerForm() {
                                 <ul>     
                                    
                                         <li>
-                                            <OutlinedInput sx={{ m: 5, bottom: 5 }} placeholder="Email"{...register("Email", {})} id="email" name="email" />
-                                        </li>
-
-                                    
-                                        <li>
                                             <OutlinedInput sx={{ m: 5, bottom: 5 }} placeholder="Project Name" {...register("Project Name", {})} id="projectName" name="projectName" />
                                         </li>
 
                                    
                                         <li>
                                             <OutlinedInput sx={{ m: 5, bottom: 5 }} placeholder="Name" {...register("Name", {})} id="name" name="name"/>
+                                        </li>
+
+                                        <li>
+                                            <OutlinedInput sx={{ m: 5, bottom: 5 }} placeholder="Email"{...register("Email", {})} id="email" name="email" />
                                         </li>
 
                                 </ul>

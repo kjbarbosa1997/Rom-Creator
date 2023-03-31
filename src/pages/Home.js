@@ -11,9 +11,9 @@ export default function Home (){
         <div className='homePaperContainer'>
         <h1 className="titleText">Welcome to the NUWC Cost Center ROM Generator!</h1>
         <p className="subTitleText">Make a selection below to get started!</p>
-        <Button variant="contained" href="/customer">Submit a Ticket</Button>
-        <Button variant="contained" href="/admin">Admin</Button>
-        <Button variant="contained" href="/romtable">Submitted Data Table</Button>
+        <Button variant="contained" href="/customer">Initate ROM</Button>
+        <Button variant="contained" href="/admin">Add Services to ROM</Button>
+        <Button variant="contained" href="/romtable">Create ROM</Button>
           
           <div id="creatorTag" className="creatorTag">
             <p>Created by Team 12 - 2023</p>

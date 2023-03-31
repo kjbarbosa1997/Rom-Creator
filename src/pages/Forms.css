@@ -120,3 +120,31 @@ li {
 .uploadBox {
     bottom: 40px;
 }
+
+.romIDPicker {
+    position: relative !important;
+    display: flex;
+    align-items: baseline;
+    justify-content: space-evenly;
+
+}
+
+.generateButton {
+    position: relative !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+}
+
+.romSubmitButton {
+    position: relative !important;
+    display: flex !important;
+    justify-content: center;
+    left: 45%;
+}
+
+.romIDInputLabel {
+    position: relative !important;
+    display: flex !important;
+    top: 10px;
+}

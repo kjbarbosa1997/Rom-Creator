@@ -5,37 +5,20 @@ import axios from 'axios';
 import { useForm, useFieldArray, Controller } from 'react-hook-form';
 import { useState } from "react";
 import $ from "jquery";
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import { TextField } from '@mui/material';
 
 const columns = [
-  { field: 'id', headerName: 'ID', width: 70 },
-  { field: 'firstName', headerName: 'First name', width: 130 },
-  { field: 'lastName', headerName: 'Last name', width: 130 },
-  {
-    field: 'age',
-    headerName: 'Age',
-    type: 'number',
-    width: 90,
-  },
-  {
-    field: 'fullName',
-    headerName: 'Full name',
-    description: 'This column has a value getter and is not sortable.',
-    sortable: false,
-    width: 160,
-  },
+  { field: 'id', headerName: 'Ticket ID', width: 70 },
+  { field: 'projectName', headerName: 'Project Name', width: 300 },
+  { field: 'clientName', headerName: 'Client Name', width: 130 },
+  { field: 'clientEmail', headerName: 'Client Email', type: 'string', width: 220},
+  { field: 'tpm', headerName: 'TPM', width: 160},
+  { field: 'financialAnalyst', headerName: 'Financial Analyst', width: 160},
 ];
 
-const rows = [
-  { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-  { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-  { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-  { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-  { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: 69 },
-  { id: 6, lastName: 'Melisandre', firstName: 'Null', age: 150 },
-  { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-  { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-  { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+
 
 
 
@@ -43,7 +26,7 @@ const rows = [
 
 
 export default function DataTable() {
-
+  const [dataArray, setDataArray] = useState([]);
   
 
 
@@ -75,6 +58,32 @@ export default function DataTable() {
     });
   };
 
+  
+    $(document).ready(function() {
+      $.ajax({
+        url: "http://localhost:8000/scripts/populateTable.php",
+        method: "GET",
+        dataType: "json",
+        success: function(data) {
+          const rowData = data.map((row, index) => {
+            return {
+              id: index + 1,
+              projectName: row.projectName,
+              clientName: row.name,
+              clientEmail: row.email,
+              tpm: row.tpm,
+              financialAnalyst: row.financialAnalyst
+            }
+          })
+          setDataArray(rowData);
+
+          
+          console.log(dataArray);
+        }
+      })
+    })
+  
+
 
   return (
 
@@ -82,18 +91,41 @@ export default function DataTable() {
         method="post"
         >
 
-          
-    
+
+
+
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={rows}
+        rows={dataArray}
         columns={columns}
-        pageSize={5}
+        pageSize={10}
         rowsPerPageOptions={[5]}
         checkboxSelection
       />
 
-      <Button type="submit" variant="contained" onChange={(event) => handleChange(event)}>Generate ROM</Button>
+  
+      
+
+      <div className = "generateButton">
+      <InputLabel className='romIDInputLabel'>Choose Project Name to generate ROM for: </InputLabel>
+      <TextField
+                        className='romID'
+                        select
+                        label="ROM Name"
+                        sx={{ marginTop: 3, marginLeft: 3, minWidth: 200 }}
+                        inputProps={register(`services.${0}.serviceID`, {
+                        required: 'Please Select a Project Name',
+                        })}>
+                            {dataArray.map((option) => (
+                                <MenuItem key={option.id} value={option.id}>
+                                {option.projectName}
+                                </MenuItem>
+                            ))}
+
+                        </TextField>
+                        </div>
+      <Button className="romSubmitButton" type="submit" variant="contained" onChange={(event) => handleChange(event)}>Generate ROM</Button>
+      
     </div>
     </form>
   );
