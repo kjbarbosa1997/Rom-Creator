@@ -2,36 +2,16 @@ import React, { useState } from 'react';
 import { createTheme, ThemeProvider, Paper, Box, Container, Button, Grid, FormControl, Select, MenuItem, TextField, Fab, OutlinedInput, FormLabel, FormControlLabel, Radio, RadioGroup, InputLabel } from '@mui/material';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
-import moment from 'moment';
 import $ from "jquery";
 import AddIcon from '@mui/icons-material/Add';
-import ReactDOM from 'react-dom';
 import { useForm, useFieldArray, useWatch } from 'react-hook-form';
 import axios from 'axios';
-import { data } from 'jquery';
-import { initializeApp } from 'firebase/app';
-import { getAnalytics, setDefaultEventParameters } from "firebase/analytics";
-import { Link } from 'react-router-dom'
 import './Forms.css';
 
 
 const theme = createTheme({
 
 });
-
-const firebaseConfig = {
-    apiKey: "AIzaSyBzW9_vdvR8RE3eFElUTH-V0qdGpmmKs6U",
-    authDomain: "capstoneproject12umassd2023.firebaseapp.com",
-    databaseURL: "https://capstoneproject12umassd2023-default-rtdb.firebaseio.com",
-    projectId: "capstoneproject12umassd2023",
-    storageBucket: "capstoneproject12umassd2023.appspot.com",
-    messagingSenderId: "431350852544",
-    appId: "1:431350852544:web:f1cfdd7748702a7410b625",
-    measurementId: "G-EFSEHNFG79"
-};
-
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
 
 export default function AdminForm() {
 
