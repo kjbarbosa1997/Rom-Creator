@@ -36,18 +36,19 @@ export default function AdminForm() {
 
     };
 
-    const handleServiceChange = (event) => {
-        setServiceName(event.target.value);
+    const handleServiceChange = (name) => {
+        setProjectName(name);
     };
 
-    const { register, control, handleSubmit, setValue } = useForm({
+    const { register, control, handleSubmit, setValue, getValues } = useForm({
 
         defaultValues: {
             services: [{
                 taskName: "", serviceID: 0, units: "",
                 isPaymentRecurring: "", yearlyCost: "",
                 weeklyCost: "", startDate: "",
-                endDate: "", taskDescription: ""
+                endDate: "", taskDescription: "",
+                projectID: 0
             }]
         }
     });
@@ -112,7 +113,7 @@ export default function AdminForm() {
             })
             setServiceArray(rowDataServices);
   
-            console.log(serviceArray);
+            //console.log(serviceArray);
             
           }
         })
@@ -125,17 +126,18 @@ export default function AdminForm() {
                     <div className='romIDPicker'>
                     <InputLabel>Select a Project Name to associate these tasks with: </InputLabel>
                     <TextField
+                       
                         className='projectName'
                         select
-                        value={projectName}
-                        onChange={handleServiceChange}
-                        label="Project Name"
+                      
+                        
+                        label="Test Project"
                         sx={{ marginTop: 3, marginLeft: 3, minWidth: 200 }}
-                        inputProps={register(`tickets.${0}.ticketID`, {
-                        required: 'Please Select a Project Name',
+                        inputProps={register(`services.${0}.serviceName`, {
+                       
                         })}>
                              {dataArray.map((option) => (
-                                <MenuItem key={option.id} value={option.id}>
+                                <MenuItem key={option.id} value={option.projectName}>
                                 {option.projectName}
                                 </MenuItem>
                              ))}
@@ -154,15 +156,17 @@ export default function AdminForm() {
                                             <TextField
                                             className='serviceName'
                                             select
-                                            value={serviceName}
-                                            onChange={handleChange}
+                                            value={getValues && getValues(`services.${index}.serviceName`)}
+                                            onChange={(newValue) => {
+                                                setValue(`services.${index}.serviceName`, newValue);
+                                            }}
                                             label="Service Name"
-                                            sx={{ marginTop: 3, marginLeft: 3, minWidth: 200 }}
-                                            inputProps={register(`services.${0}.serviceID`, {
-                                            required: 'Please Select a Service',
+                                            sx={{ marginTop: 3, marginLeft: 0, minWidth: 200 }}
+                                            inputProps={register(`services.${0}.serviceName`, {
+                                            
                                             })}>
                                                 {serviceArray.map((option) => (
-                                                    <MenuItem key={option.id} value={option.id}>
+                                                    <MenuItem key={option.id} value={option.serviceName}>
                                                     {option.serviceName}
                                                     </MenuItem>
                                                 ))}
@@ -187,12 +191,12 @@ export default function AdminForm() {
                                                 <DesktopDatePicker
 
                                                     label="Date of Service Start"
-                                                    value={startDate}
+                                                    value={getValues && getValues(`services.${index}.startDate`)}
                                                     className='startDate'
                                                     inputFormat="MM/DD/YYYY"
-                                                    startDate={startDate}
+                                                    startDate={getValues && getValues(`services.${index}.startDate`)}
                                                     onChange={(newValue) => {
-                                                        setStartDate(newValue);
+                                                        setValue(`services.${index}.startDate`, newValue);
                                                     }}
                                                     inputProps={register(`services.${index}.startDate`, {
                                                         required: 'Please Select a Start Date',
@@ -207,11 +211,11 @@ export default function AdminForm() {
                                             <LocalizationProvider dateAdapter={AdapterMoment}>
                                                 <DesktopDatePicker
                                                     label="Date of Service End"
-                                                    value={endDate}
+                                                    value={getValues && getValues(`services.${index}.endDate`)}
                                                     inputFormat="MM/DD/YYYY"
                                                     endDate={endDate}
                                                     onChange={(newValue) => {
-                                                        setEndDate(newValue);
+                                                        setValue(`services.${index}.endDate`, newValue);
                                                     }}
                                                     inputProps={register(`services.${index}.endDate`, {
                                                         required: 'Please Select an End Date',

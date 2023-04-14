@@ -16,6 +16,8 @@ const columns = [
   { field: 'clientEmail', headerName: 'Client Email', type: 'string', width: 220},
   { field: 'tpm', headerName: 'TPM', width: 160},
   { field: 'financialAnalyst', headerName: 'Financial Analyst', width: 160},
+  { field: 'fileName', headerName: 'File Name', width: 160},
+  { field: 'fileURL', headerName: 'File URL', width: 1500},
 ];
 
 
@@ -72,7 +74,10 @@ export default function DataTable() {
               clientName: row.name,
               clientEmail: row.email,
               tpm: row.tpm,
-              financialAnalyst: row.financialAnalyst
+              financialAnalyst: row.financialAnalyst,
+              fileName: row.fileName,
+              fileURL: row.fileURL,
+
             }
           })
           setDataArray(rowData);

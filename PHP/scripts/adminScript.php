@@ -7,7 +7,7 @@
     $host = "localhost:3306";
     $dbname = "romdb";
     $username = "root";
-    $password = "";
+    $password = "12354";
 
     //$conn = mysqli_connect($host, $username, $password, $dbname);
 

@@ -6,7 +6,7 @@ header("Access-Control-Allow-Origin: *");
 $host = "localhost";
 	$dbname = "romdb";
 	$username = "root";
-	$password = "";
+	$password = "12354";
 	
 	$conn = mysqli_connect(hostname: $host, username: $username, password: $password, database: $dbname) or die("Could not connect to database");
 
