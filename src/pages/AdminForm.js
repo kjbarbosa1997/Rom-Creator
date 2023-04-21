@@ -23,32 +23,21 @@ export default function AdminForm() {
 
     const [endDate, setEndDate] = useState(new Date());
 
-    const [serviceID, setServiceID] = useState('');
 
-    const [projectName, setProjectName] = useState('');
+    
+    const [serviceID, setServiceID] = useState("");
 
-    const [serviceName, setServiceName] = useState('');
-
-    const handleChange = (event) => {
-        setServiceID(event.target.value);
-        setServiceName(event.target.name);
-        setProjectName(event.target.projectName);
-
-    };
-
-    const handleServiceChange = (name) => {
-        setProjectName(name);
-    };
 
     const { register, control, handleSubmit, setValue, getValues } = useForm({
 
         defaultValues: {
             services: [{
-                taskName: "", serviceID: 0, units: "",
+                taskName: "", units: "",
                 isPaymentRecurring: "", yearlyCost: "",
                 weeklyCost: "", startDate: "",
                 endDate: "", taskDescription: "",
-                projectID: 0
+                serviceID: ""
+                
             }]
         }
     });
@@ -59,28 +48,32 @@ export default function AdminForm() {
 
     const SendToPHP = (data) => {
         var i = 0;
-        console.log(data);
+        
         for (i = 0; i < data.services.length; i++) {
             const url = "http://localhost:8000/scripts/adminScript.php";
             let fData = new FormData();
+            //let serviceID = data.services[i].getAttribute('data-service-id');
             fData.append('adminaccess', true);
+            fData.append('romID', data.romID);
             fData.append('taskName', data.services[i].taskName);
-            fData.append('serviceID', data.services[i].serviceID);
+            fData.append('serviceID', data.services[i].serviceName);
             fData.append('units', data.services[i].units);
-            // fData.append('payment', data.services[i].isPaymentRecurring);
-            // fData.append('yearlycost', data.services[i].yearlyCost);
-            // fData.append('weeklycost', data.services[i].weeklyCost);
             fData.append('startDate', data.services[i].startDate);
             fData.append('endDate', data.services[i].endDate);
             fData.append('taskDescription', data.services[i].taskDescription);
+            //console.log(data);
+            console.log(fData);
             axios.post(url, fData)
                 .then(response => alert(response.data))
                 .catch(error => alert(error));
+            
+                
         }
+        
     }
 
     const submitForm = (e) => {
-        console.log(e);
+        //console.log(e);
     };
 
     $(document).ready(function() {
@@ -92,9 +85,11 @@ export default function AdminForm() {
             const rowData = data.map((row, index) => {
               return {
                 projectName: row.projectName,
+                projectID: row.ticketID
               }
             })
             setDataArray(rowData);
+            //console.log(rowData);
   
           }
         })
@@ -109,15 +104,20 @@ export default function AdminForm() {
             const rowDataServices = data.map((row, index) => {
               return {
                 serviceName: row.serviceName,
+                serviceID: row.serviceID
               }
             })
             setServiceArray(rowDataServices);
-  
+            //console.log(rowDataServices);
+
+           
             //console.log(serviceArray);
             
           }
         })
       })
+
+      
 
     return (
         <ThemeProvider theme={theme}>
@@ -129,15 +129,14 @@ export default function AdminForm() {
                        
                         className='projectName'
                         select
-                      
-                        
-                        label="Test Project"
+                        required
+                        label="Project Name"
                         sx={{ marginTop: 3, marginLeft: 3, minWidth: 200 }}
-                        inputProps={register(`services.${0}.serviceName`, {
+                        inputProps={register('romID', {
                        
                         })}>
                              {dataArray.map((option) => (
-                                <MenuItem key={option.id} value={option.projectName}>
+                                <MenuItem key={option.id} value={option.projectID}>
                                 {option.projectName}
                                 </MenuItem>
                              ))}
@@ -154,24 +153,23 @@ export default function AdminForm() {
                                         <Container className='boxLeft'>
                                             <OutlinedInput className="taskName" placeholder="Task Name" {...register(`services.${index}.taskName`)} />
                                             <TextField
-                                            className='serviceName'
-                                            select
-                                            value={getValues && getValues(`services.${index}.serviceName`)}
-                                            onChange={(newValue) => {
-                                                setValue(`services.${index}.serviceName`, newValue);
-                                            }}
-                                            label="Service Name"
-                                            sx={{ marginTop: 3, marginLeft: 0, minWidth: 200 }}
-                                            inputProps={register(`services.${0}.serviceName`, {
-                                            
-                                            })}>
+                                                className='serviceName'
+                                                value={getValues(`services.${index}.serviceName`)}
+                                                onChange={(event) => setValue(`services.${index}.serviceName`, event.target.value)}
+                                                select // tell TextField to render select
+                                                label="Services"
+                                                sx={{ marginTop: 3, marginLeft: 0, minWidth: 200 }}
+                                                inputProps={register(`services.${index}.serviceName`, {
+                                                })}
+                                            >
                                                 {serviceArray.map((option) => (
-                                                    <MenuItem key={option.id} value={option.serviceName}>
+                                                <MenuItem key={option.id} value={option.serviceID}>
                                                     {option.serviceName}
-                                                    </MenuItem>
+                                                </MenuItem>
                                                 ))}
-    
-                                        </TextField>
+
+                                                
+                                            </TextField>
 
                                                     
                                         

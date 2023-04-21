@@ -23,53 +23,39 @@
         $startvalue = $_POST['startDate'];
         $endvalue = $_POST['endDate'];
         $descvalue = $_POST['taskDescription'];
-        $romid = 1; //Will soon be a generated value or something else.
+        $romid = $_POST['romID'];
         $serviceid = $_POST['serviceID']; //Will soon be a generated value or something else.
         $taskvalue = $_POST["taskName"];
 
         $turnOffFKC = mysqli_execute_query($conn, "SET foreign_key_checks = 0");
+
+        $timestampStart = strtotime($startvalue);
+        $timestampEnd = strtotime($endvalue);
+        $mysql_date_start = date('Y-m-d H:i:s', $timestampStart);
+        $mysql_date_end = date('Y-m-d H:i:s', $timestampEnd);
+
         
         $sql = "INSERT INTO task (romID, serviceID, taskName, startDate, endDate, taskDescription, units) VALUES (?,?,?,?,?,?,?)";
 
-        //$sql = "INSERT INTO 'task' ($romid, $serviceid, $servicevalue, $startvalue, $endvalue, $descvalue, $unitsvalue) VALUES (?,?,?,?,?,?,?)";
+        
 
         $stmt = mysqli_stmt_init($conn);
         if ( ! mysqli_stmt_prepare($stmt, $sql)) { die(mysqli_error($conn)); }
         mysqli_stmt_bind_param($stmt,'iissssi',
         //$romid, $serviceid, "Send String To Table", "2023-03-16", $endvalue, "Task 5 Description Testing...", $unitsvalue
-        $romid, $serviceid, $taskvalue, $startvalue, $endvalue, $descvalue, $unitsvalue
+        $romid, $serviceid, $taskvalue, $mysql_date_start, $mysql_date_end, $descvalue, $unitsvalue
         // 1       4         Task Name   Start Date   endDate    description  units   
         );
+
+    
+
         mysqli_stmt_execute($stmt);
+    
         echo "Admin record(s) saved.";
 
-        $turnOnFKC = mysqli_execute_query($conn, "SET foreign_key_checks = 1");
+        $turnOnFKC = mysqli_execute_query($conn, "SET foreign_key_checks = 0");
 
         
-        
-    }
-    else{
-
-        
-        $customeremail = $_POST["email"];
-        $projectname = $_POST['projectName']; 
-        $regname = $_POST['name'];
-        $tpmname = $_POST['tpm'];
-        $financialanalyst = $_POST['financialAnalyst'];
-        $fileupload = $_POST['pathname'];
-        echo $customeremail;
-        echo $projectname;
-        echo $regname;
-        echo $tpmname;
-        echo $financialanalyst;
-        echo $fileupload;
-        
-        $sql = "INSERT INTO tickets (name, email, project, tpm, financialAnalyst) VALUES (?, ?, ?, ?, ?)";
-        $stmt = mysqli_stmt_init($conn);
-        if ( ! mysqli_stmt_prepare($stmt, $sql)) { die(mysqli_error($conn)); }
-        mysqli_stmt_bind_param($stmt,'sssss', $regname, $customeremail, $projectname, $tpmname, $financialanalyst);
-        mysqli_stmt_execute($stmt);
-        echo "Customer record saved.";
         
     }
     

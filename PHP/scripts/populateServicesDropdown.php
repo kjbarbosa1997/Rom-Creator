@@ -15,9 +15,9 @@ $host = "localhost";
 	}
 
 
-$userData = mysqli_query($conn,"select * from services"); 
+$servicesData= mysqli_query($conn,"select * from services"); 
 $response = array(); 
-while($row = mysqli_fetch_assoc($userData)){ 
+while($row = mysqli_fetch_assoc($servicesData)){ 
   $response[] = $row; 
 } 
 

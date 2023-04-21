@@ -48,7 +48,7 @@ $pdf->SetY(120);
 
 //cell (width, height, text, border, end line, [align])
 $pdf->Cell(189,5,'FY23',0,1,"C");
-$pdf->Cell(189,5,'Project Name',0,1,"C");
+$pdf->Cell(189,5,$rom['projectName'],0,1,"C");
 $pdf->Cell(189,5,'Creation Request',0,1,"C");
 $pdf->Cell(189,5,'ROM V1.0',0,1,"C");
 
@@ -58,11 +58,9 @@ $pdf->Cell(189,5,'Prepared By:',0,1,"C");
 $pdf->Cell(189,8,'',0,1,"C");
 $pdf->Cell(189,5,$rom['tpm'],0,1,"C");
 $pdf->Cell(189,5,'AIMTC Webmaster Lead',0,1,"C");
-$pdf->Cell(189,5,'email@domain.com',0,1,"C");
-$pdf->Cell(189,5,'',0,1,"C");
+$pdf->Cell(189,5,$rom['financialAnalyst'],0,1,"C");
 $pdf->Cell(189,5,'TPM',0,1,"C");
 $pdf->Cell(189,5,'AIMTC Technical Program Manager',0,1,"C");
-$pdf->Cell(189,5,'email@domain',0,1,"C");
 
 $query = mysqli_query($conn, "select * from task
     inner join services using(serviceID)
@@ -101,7 +99,7 @@ while($task = mysqli_fetch_array($query)) {
     $pdf->Cell(35,5,$task['units']*$task['costPerUnit'],1,1, "R");
 
     $total += $task['units']*$task['costPerUnit'];
-    
+    $x++;
 }
 
 $pdf->AddPage();

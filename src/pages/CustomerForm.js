@@ -36,9 +36,9 @@ export default function CustomerForm() {
             const a = await fileURL;
             let fData = new FormData();
 
+            fData.append("projectName", data.projectName);
             fData.append("name", data.name);
             fData.append("email", data.email);
-            fData.append("projectName", data.projectName);
             fData.append("tpm", data.tpm);
             fData.append("financialAnalyst", data.financialAnalyst);
             fData.append("fileName", fileUpload.name);
@@ -48,10 +48,13 @@ export default function CustomerForm() {
                 .then(response => alert(response.data))
                 .catch(error => alert(error));
 
+                console.log(fData);
+
             for (const pair of fData.entries()) {
                 console.log(`${pair[0]}: ${pair[1]}`);
             }
         };
+        
         saveData();
     }
 
@@ -116,7 +119,6 @@ export default function CustomerForm() {
 
             <Box m={1} display="flex" justifyContent="center" alignItems="flex-end">
                 <Button type="submit" variant="contained" color="primary"
-                // onChange={(event) => handleChange(event)}
                 >
                     Submit
                 </Button>

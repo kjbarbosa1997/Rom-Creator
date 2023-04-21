@@ -10,7 +10,7 @@ import Menu from '@mui/material/Menu';
 
 
 export default function Header() {
-    const pages = ["Home", "Customer", "Admin", "ROM Table"];
+    const pages = ["Home", "Initate ROM", "Add Services to Rom", "Create ROM"];
     const pageLinks = ["/home", "/customer", "/admin", "/romtable"];
 
     const [anchorEl, setAnchorEl] = React.useState(null);

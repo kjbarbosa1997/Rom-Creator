@@ -35,11 +35,7 @@ export default function DataTable() {
   const { register, control, handleSubmit, reset, trigger, setError } = useForm({
 
   });
-  const { fields, append, remove } = useFieldArray({
-      control,
-      name: "tasks"
-  })
-
+  
   const [name, setName] = useState("");
   const [result, setResult] = useState("");
 
@@ -81,6 +77,7 @@ export default function DataTable() {
             }
           })
           setDataArray(rowData);
+          console.log(rowData);
 
         }
       })
@@ -103,7 +100,6 @@ export default function DataTable() {
         columns={columns}
         pageSize={10}
         rowsPerPageOptions={[5]}
-        checkboxSelection
       />
 
   
@@ -116,7 +112,7 @@ export default function DataTable() {
                         select
                         label="Project Name"
                         sx={{ marginTop: 3, marginLeft: 3, minWidth: 200 }}
-                        inputProps={register(`tickets.${0}.ticketID`, {
+                        inputProps={register(`ticketID`, {
                         required: 'Please Select a Project Name',
                         })}>
                             {dataArray.map((option) => (
@@ -126,6 +122,8 @@ export default function DataTable() {
                             ))}
 
                         </TextField>
+
+                        
                         </div>
       <Button className="romSubmitButton" type="submit" variant="contained" onChange={(event) => handleChange(event)}>Generate ROM</Button>
       
