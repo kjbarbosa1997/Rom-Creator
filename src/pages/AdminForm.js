@@ -4,7 +4,7 @@ import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment'
 import { LocalizationProvider, DesktopDatePicker } from '@mui/x-date-pickers';
 import $ from "jquery";
 import AddIcon from '@mui/icons-material/Add';
-import { useForm, useFieldArray, useWatch } from 'react-hook-form';
+import { useForm, useFieldArray, Controller} from 'react-hook-form';
 import axios from 'axios';
 import './Forms.css';
 
@@ -29,18 +29,19 @@ export default function AdminForm() {
 
 
     const { register, control, handleSubmit, setValue, getValues } = useForm({
+    defaultValues: {
+        services: [{
+            taskName: "", units: "",
+            isPaymentRecurring: "", yearlyCost: "",
+            weeklyCost: "", startDate: new Date().toISOString().substring(0, 10),
+            endDate: new Date().toISOString().substring(0, 10), taskDescription: "",
+            serviceID: ""
+        }]
+    }
+});
 
-        defaultValues: {
-            services: [{
-                taskName: "", units: "",
-                isPaymentRecurring: "", yearlyCost: "",
-                weeklyCost: "", startDate: "",
-                endDate: "", taskDescription: "",
-                serviceID: ""
-                
-            }]
-        }
-    });
+    
+    
     const { fields, append, remove } = useFieldArray({
         control,
         name: "services"
@@ -186,41 +187,41 @@ export default function AdminForm() {
                                             {/* Implement register component above on input data that does not print to console*/}
 
                                             <LocalizationProvider dateAdapter={AdapterMoment}>
-                                                <DesktopDatePicker
+  <Controller
+    name={`services.${index}.startDate`}
+    control={control}
+    rules={{ required: 'Please Select a Start Date' }}
+    render={({ field }) => (
+      <DesktopDatePicker
+        label="Date of Service Start"
+        value={field.value}
+        className="startDate"
+        inputFormat="MM/DD/YYYY"
+        onChange={field.onChange}
+        renderInput={(params) => <TextField {...params} />}
+      />
+    )}
+  />
+</LocalizationProvider>
 
-                                                    label="Date of Service Start"
-                                                    value={getValues && getValues(`services.${index}.startDate`)}
-                                                    className='startDate'
-                                                    inputFormat="MM/DD/YYYY"
-                                                    startDate={getValues && getValues(`services.${index}.startDate`)}
-                                                    onChange={(newValue) => {
-                                                        setValue(`services.${index}.startDate`, newValue);
-                                                    }}
-                                                    inputProps={register(`services.${index}.startDate`, {
-                                                        required: 'Please Select a Start Date',
-                                                    })}
-                                                    renderInput={(params) =>
-                                                        <TextField
-                                                            {...params}
+<LocalizationProvider dateAdapter={AdapterMoment}>
+  <Controller
+    name={`services.${index}.endDate`}
+    control={control}
+    rules={{ required: 'Please Select an End Date' }}
+    render={({ field }) => (
+      <DesktopDatePicker
+        label="Date of Service End"
+        value={field.value}
+        inputFormat="MM/DD/YYYY"
+        onChange={field.onChange}
+        renderInput={(params) => <TextField {...params} />}
+      />
+    )}
+  />
+</LocalizationProvider>
 
-                                                        />}
-                                                />
-                                            </LocalizationProvider>
-                                            <LocalizationProvider dateAdapter={AdapterMoment}>
-                                                <DesktopDatePicker
-                                                    label="Date of Service End"
-                                                    value={getValues && getValues(`services.${index}.endDate`)}
-                                                    inputFormat="MM/DD/YYYY"
-                                                    endDate={endDate}
-                                                    onChange={(newValue) => {
-                                                        setValue(`services.${index}.endDate`, newValue);
-                                                    }}
-                                                    inputProps={register(`services.${index}.endDate`, {
-                                                        required: 'Please Select an End Date',
-                                                    })}
-                                                    renderInput={(params) => <TextField {...params} />}
-                                                />
-                                            </LocalizationProvider>
+
 
                                         </Container>
                                     </Grid>
