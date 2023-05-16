@@ -2,13 +2,23 @@ Software Quote Document Generator
 
 # Functions
 
-This generation software consists of 3 seperate pages and multiple different componenets. My generation system works in a 3 step format with pages set up as such. 
-1.) Customer Form
-  Customer submits quote request with basic information
-
-Each page will be described in detail.
+This generation software consists of 3 seperate pages and multiple different components. My generation system works in a 3 step format with pages set up as such. 
 
 ### Customer Form
+Customer submits quote request with basic information provided (name, project name, email, etc.). The text based information is saved to a mySQL database with an    identifier attached for retrieval later while the files uploaded by the customer are saved in Firebase storage also with an accompanying identifier.
+   #### Components utilized: Paper, Grid, Box, TextInput, fileUpload, PHP, mySQL, Firebase
+
+
+### Administrator Form
+Administrator reviews information recieved from customer and adds any potential information required for a thorough quote. After seperating the customer's quote into specific tasks, providing each task with a detailed description, and tagging the task with a service tag (used to associate price with service), the administrator can save the supplimental information to the mySQL database that initially stored the customer provided information.
+  #### Components utilized: Paper, Grid, Dropdown, FieldArray, PHP, mySQL, TextInput
+
+
+### Information Table Form
+This form is utilized by the administrator to overview all quote requests stored in the mySQL database. The administrator can choose the name of a support ticket and hit generate. This then passes an identifier to a PHP script which grabs the information from the database, passes it to a library called fPDF and generates a PDF file from the stored information. This PDF file is then downloadable by the administrator to send to the customer.
+   #### Components utilized: Datatable, Dropdown, PHP, fPDF, mySQL
+   
+
 
 
 
