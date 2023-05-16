@@ -1,3 +1,18 @@
+Software Quote Document Generator
+
+# Functions
+
+This generation software consists of 3 seperate pages and multiple different componenets. My generation system works in a 3 step format with pages set up as such. 
+1.) Customer Form
+  Customer submits quote request with basic information
+
+Each page will be described in detail.
+
+## Customer Form
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
